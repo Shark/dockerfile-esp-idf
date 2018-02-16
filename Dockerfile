@@ -9,13 +9,16 @@ RUN set -ex \
  && tmpdir="$(mktemp -d)" \
  && trap "rm -r \"$tmpdir\"" EXIT \
  && cd "$tmpdir" \
- && wget -O "$tmpdir"/idf.tar.gz https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-61-gab8375a-5.2.0.tar.gz \
+ && wget -O "$tmpdir"/idf.tar.gz https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz \
  && tar xf idf.tar.gz -C /usr/local/src
 
 RUN adduser --disabled-password --uid 1000 --gecos '' core
 
 RUN set -ex \
- && git clone --recursive https://github.com/espressif/esp-idf.git /usr/local/src/esp-idf \
+ && git clone https://github.com/espressif/esp-idf.git /usr/local/src/esp-idf \
+ && cd /usr/local/src/esp-idf \
+ && git checkout v3.0-rc1 \
+ && git submodule update --init --recursive \
  && chown -R core:core /usr/local/src/esp-idf
 
 USER core
