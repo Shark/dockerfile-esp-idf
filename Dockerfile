@@ -21,6 +21,11 @@ RUN set -ex \
  && git submodule update --init --recursive \
  && chown -R core:core /usr/local/src/esp-idf
 
+RUN set -ex \
+ && wget -O /tmp/mkspiffs.tar.gz https://github.com/igrr/mkspiffs/releases/download/0.2.2/mkspiffs-0.2.2-esp-idf-linux64.tar.gz \
+ && tar -xf /tmp/mkspiffs.tar.gz -C /usr/local/bin --strip-components=1 mkspiffs-0.2.2-esp-idf-linux64/mkspiffs \
+ && rm /tmp/mkspiffs.tar.gz
+
 USER core
 ENV PATH /usr/local/src/xtensa-esp32-elf/bin:$PATH
 ENV IDF_PATH /usr/local/src/esp-idf

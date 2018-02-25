@@ -1,4 +1,4 @@
-NAME = sh4rk/esp32-arduino-idf
+NAME = sh4rk/esp-idf
 VERSION = latest
 
 .PHONY: all build
