@@ -9,7 +9,7 @@ RUN set -ex \
  && tmpdir="$(mktemp -d)" \
  && trap "rm -r \"$tmpdir\"" EXIT \
  && cd "$tmpdir" \
- && wget -O "$tmpdir"/idf.tar.gz https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz \
+ && wget -O "$tmpdir"/idf.tar.gz https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-75-gbaf03c2-5.2.0.tar.gz \
  && tar xf idf.tar.gz -C /usr/local/src
 
 RUN adduser --disabled-password --uid 1000 --gecos '' core
@@ -17,13 +17,13 @@ RUN adduser --disabled-password --uid 1000 --gecos '' core
 RUN set -ex \
  && git clone https://github.com/espressif/esp-idf.git /usr/local/src/esp-idf \
  && cd /usr/local/src/esp-idf \
- && git checkout v3.0-rc1 \
+ && git checkout 37765d0071dce62cf6ffb425e0aab3fcab8c0897 \
  && git submodule update --init --recursive \
  && chown -R core:core /usr/local/src/esp-idf
 
 RUN set -ex \
- && wget -O /tmp/mkspiffs.tar.gz https://github.com/igrr/mkspiffs/releases/download/0.2.2/mkspiffs-0.2.2-esp-idf-linux64.tar.gz \
- && tar -xf /tmp/mkspiffs.tar.gz -C /usr/local/bin --strip-components=1 mkspiffs-0.2.2-esp-idf-linux64/mkspiffs \
+ && wget -O /tmp/mkspiffs.tar.gz https://github.com/igrr/mkspiffs/releases/download/0.2.1/mkspiffs-0.2.1-linux64.tar.gz \
+ && tar -xf /tmp/mkspiffs.tar.gz -C /usr/local/bin --strip-components=1 mkspiffs-0.2.1-linux64/mkspiffs \
  && rm /tmp/mkspiffs.tar.gz
 
 USER core
